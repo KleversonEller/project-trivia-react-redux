@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUser } from '../actions';
 
@@ -73,6 +73,14 @@ class Login extends React.Component {
           >
             Play
           </button>
+          <div>
+            <Link
+              to="settings"
+              data-testid="btn-settings"
+            >
+              Configurações
+            </Link>
+          </div>
         </form>
         {/* {redirect && <Redirect to="/carteira" />} */}
       </>
