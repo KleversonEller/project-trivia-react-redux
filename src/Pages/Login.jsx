@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { thunkGetToken } from '../actions';
+import { thunkGetToken, thunkGravatar } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -28,10 +28,10 @@ class Login extends React.Component {
   }
 
   async saveEmail() {
-    const { get, history } = this.props;
+    const { get, history, getThunkPicture } = this.props;
     const { email, nick } = this.state;
     get(email, nick);
-
+    getThunkPicture(email);
     history.push('/game');
   }
 
@@ -76,6 +76,7 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   get: (email, nick) => dispatch(thunkGetToken(email, nick)),
+  getThunkPicture: (email) => dispatch(thunkGravatar(email)),
 });
 
 Login.propTypes = {
