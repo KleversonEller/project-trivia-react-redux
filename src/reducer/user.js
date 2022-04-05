@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   assertions: '',
   score: '',
   gravatarEmail: '',
+  token: '',
 };
 
 function player(state = INITIAL_STATE, action) {
