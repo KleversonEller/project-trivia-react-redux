@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getUser, thunkGravatar } from '../actions';
+import { thunkGetToken, thunkGravatar } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -28,63 +27,55 @@ class Login extends React.Component {
     return validaEmail && validaSenha;
   }
 
-  saveEmail() {
-    const { getEmail, getThunkPicture } = this.props;
+  async saveEmail() {
+    const { get, history, getThunkPicture } = this.props;
     const { email, nick } = this.state;
-
-    getEmail(email, nick);
+    get(email, nick);
     getThunkPicture(email);
-
-    console.log(getThunkPicture);
-
-    // this.setState({ redirect: true });
+    history.push('/game');
   }
 
   render() {
-    // const { redirect } = this.state;
     return (
-      <>
-        <form className="form-container">
-          <h2> Login </h2>
-          <label htmlFor="email">
-            <input
-              placeholder="E-mail"
-              onChange={ this.handleInput }
-              name="email"
-              data-testid="input-gravatar-email"
-              id="email"
-              type="text"
-            />
-          </label>
-          <br />
-          <label htmlFor="nick">
-            <input
-              placeholder="Nick"
-              onChange={ this.handleInput }
-              name="nick"
-              data-testid="input-player-name"
-              id="nick"
-              type="text"
-            />
-          </label>
-          <br />
-          <button
-            data-testid="btn-play"
-            onClick={ this.saveEmail }
-            disabled={ !this.validBtn() }
-            type="button"
-          >
-            Play
-          </button>
-        </form>
-        {/* {redirect && <Redirect to="/carteira" />} */}
-      </>
+      <form className="form-container">
+        <h2> Login </h2>
+        <label htmlFor="email">
+          <input
+            placeholder="E-mail"
+            onChange={ this.handleInput }
+            name="email"
+            data-testid="input-gravatar-email"
+            id="email"
+            type="text"
+          />
+        </label>
+        <br />
+        <label htmlFor="nick">
+          <input
+            placeholder="Nick"
+            onChange={ this.handleInput }
+            name="nick"
+            data-testid="input-player-name"
+            id="nick"
+            type="text"
+          />
+        </label>
+        <br />
+        <button
+          data-testid="btn-play"
+          onClick={ this.saveEmail }
+          disabled={ !this.validBtn() }
+          type="button"
+        >
+          Play
+        </button>
+      </form>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getEmail: (email, nick) => dispatch(getUser(email, nick)),
+  get: (email, nick) => dispatch(thunkGetToken(email, nick)),
   getThunkPicture: (email) => dispatch(thunkGravatar(email)),
 });
 

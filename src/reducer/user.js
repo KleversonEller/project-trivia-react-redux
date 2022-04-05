@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   score: 0,
   gravatarEmail: '',
   picture: '',
-};
+}
 
 function player(state = INITIAL_STATE, action) {
   switch (action.type) {
