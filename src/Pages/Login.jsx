@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getUser } from '../actions';
+import { getUser, thunkGravatar } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -29,10 +29,13 @@ class Login extends React.Component {
   }
 
   saveEmail() {
-    const { getEmail } = this.props;
+    const { getEmail, getThunkPicture } = this.props;
     const { email, nick } = this.state;
 
     getEmail(email, nick);
+    getThunkPicture(email);
+
+    console.log(getThunkPicture);
 
     // this.setState({ redirect: true });
   }
@@ -82,6 +85,7 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   getEmail: (email, nick) => dispatch(getUser(email, nick)),
+  getThunkPicture: (email) => dispatch(thunkGravatar(email)),
 });
 
 Login.propTypes = {
