@@ -1,5 +1,5 @@
 import fetchGravatar from '../services/gravatarAPI';
-import getToken from '../service/getToken';
+import getToken from '../services/getToken';
 
 export const EMAIL_NICK = 'EMAIL_NICK';
 export const GRAVATAR_HASH = 'GRAVATAR_HASH';
