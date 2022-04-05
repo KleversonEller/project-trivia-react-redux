@@ -18,10 +18,10 @@ export const thunkGravatar = (email) => async (dispatch) => {
   } catch (error) {
     dispatch(actionGravatar(error));
   }
-  };
+};
 
 export const thunkGetToken = (email, nick) => async (dispatch) => {
   const token = await getToken();
   dispatch(actionGetToken(token.token));
   dispatch(getUser(email, nick));
-  };
+};
