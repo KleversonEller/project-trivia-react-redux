@@ -26,6 +26,8 @@ class Game extends React.Component {
               <p data-testid="question-text">
                 { questions[indexQuest].question}
               </p>
+              {/* adicionar um Map para ficar dinamico e adicionar
+              uma logica pra ficar aleatorio */}
               {questions[indexQuest].incorrect_answers > 1
                 ? (
                   <div data-testid="answer-options">
