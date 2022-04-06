@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from './Header';
+import Timer from '../components/Timer';
 import './Game.css';
 
 class Game extends React.Component {
@@ -10,7 +11,14 @@ class Game extends React.Component {
     this.state = {
       indexQuest: 0,
       classActive: false,
+      disabled: false,
     };
+  }
+
+  timeOut = () => {
+    this.setState({
+      disabled: true,
+    });
   }
 
   changeClass = () => {
@@ -21,7 +29,7 @@ class Game extends React.Component {
 
   render() {
     const { questions } = this.props;
-    const { indexQuest, classActive } = this.state;
+    const { indexQuest, classActive, disabled } = this.state;
     return (
       <div>
         {questions.length > 0
@@ -44,12 +52,16 @@ class Game extends React.Component {
                       data-testid={ testId }
                       key={ index }
                       type="button"
+                      disabled={ disabled }
                       className={ classActive && className }
                       onClick={ this.changeClass }
                     >
                       {answer}
                     </button>
                   ))}
+              </div>
+              <div>
+                <Timer timeOut={ this.timeOut } />
               </div>
             </div>
           )
