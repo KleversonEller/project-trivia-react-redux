@@ -15,28 +15,34 @@ const questions = (state = INITIAL_STATE, action) => {
           ? [
             {
               answer: question.correct_answer,
+              className: 'correct',
               testId: 'correct-answer',
             },
             {
               answer: question.incorrect_answers[0],
+              className: 'incorrect',
               testId: 'wrong-answer-0',
             },
             {
               answer: question.incorrect_answers[1],
+              className: 'incorrect',
               testId: 'wrong-answer-1',
             },
             {
               answer: question.incorrect_answers[2],
+              className: 'incorrect',
               testId: 'wrong-answer-2',
             },
           ]
           : [
             {
               answer: question.correct_answer,
+              className: 'correct',
               testId: 'correct-answer',
             },
             {
               answer: question.incorrect_answers[0],
+              className: 'incorrect',
               testId: 'wrong-answer-0',
             },
           ] }));

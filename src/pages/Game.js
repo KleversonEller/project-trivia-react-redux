@@ -2,18 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from './Header';
+import './Game.css';
 
 class Game extends React.Component {
   constructor() {
     super();
     this.state = {
       indexQuest: 0,
+      classActive: false,
     };
+  }
+
+  changeClass = () => {
+    this.setState({
+      classActive: true,
+    });
   }
 
   render() {
     const { questions } = this.props;
-    const { indexQuest } = this.state;
+    const { indexQuest, classActive } = this.state;
     return (
       <div>
         {questions.length > 0
@@ -31,8 +39,14 @@ class Game extends React.Component {
                   .map((element) => ({ element, sort: Math.random() }))
                   .sort((a, b) => a.sort - b.sort)
                   .map(({ element }) => element)
-                  .map(({ answer, testId }, index) => (
-                    <button data-testid={ testId } key={ index } type="button">
+                  .map(({ answer, testId, className }, index) => (
+                    <button
+                      data-testid={ testId }
+                      key={ index }
+                      type="button"
+                      className={ classActive && className }
+                      onClick={ this.changeClass }
+                    >
                       {answer}
                     </button>
                   ))}
