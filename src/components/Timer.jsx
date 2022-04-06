@@ -23,11 +23,13 @@ class Timer extends Component {
 
   tick = () => {
     const { counter } = this.state;
-    const { timeOut } = this.props;
+    const { timeOut, timer } = this.props;
     if (counter > 0) {
       this.setState((prevState) => ({
         counter: prevState.counter - 1,
-      }));
+      }), () => {
+        timer(counter);
+      });
     } else {
       timeOut();
     }
