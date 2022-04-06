@@ -6,6 +6,9 @@ export const EMAIL_NICK = 'EMAIL_NICK';
 export const GRAVATAR_HASH = 'GRAVATAR_HASH';
 export const GET_TOKEN = 'GET_TOKEN';
 export const LOAD_QUESTIONS_SUCCESS = 'LOAD_QUESTIONS_SUCCESS';
+export const SUM_SCORE = 'SUM_SCORE';
+
+export const getScore = (score) => ({ type: SUM_SCORE, score });
 
 export const getUser = (email, nick) => ({ type: EMAIL_NICK, email, nick });
 
