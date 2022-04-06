@@ -7,7 +7,39 @@ const INITIAL_STATE = {
 const questions = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case LOAD_QUESTIONS_SUCCESS:
-    return action.questions.results;
+    return action.questions.results
+      .map((question) => ({
+        category: question.category,
+        question: question.question,
+        answers: question.incorrect_answers.length >= 2
+          ? [
+            {
+              answer: question.correct_answer,
+              testId: 'correct-answer',
+            },
+            {
+              answer: question.incorrect_answers[0],
+              testId: 'wrong-answer-0',
+            },
+            {
+              answer: question.incorrect_answers[1],
+              testId: 'wrong-answer-1',
+            },
+            {
+              answer: question.incorrect_answers[2],
+              testId: 'wrong-answer-2',
+            },
+          ]
+          : [
+            {
+              answer: question.correct_answer,
+              testId: 'correct-answer',
+            },
+            {
+              answer: question.incorrect_answers[0],
+              testId: 'wrong-answer-0',
+            },
+          ] }));
   default:
     return state;
   }

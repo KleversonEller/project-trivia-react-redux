@@ -26,35 +26,17 @@ class Game extends React.Component {
               <p data-testid="question-text">
                 { questions[indexQuest].question}
               </p>
-              {/* adicionar um Map para ficar dinamico e adicionar
-              uma logica pra ficar aleatorio */}
-              {questions[indexQuest].incorrect_answers > 1
-                ? (
-                  <div data-testid="answer-options">
-                    <button type="button" data-testid="correct-answer">
-                      { questions[indexQuest].correct_answer}
+              <div data-testid="answer-options">
+                {questions[indexQuest].answers
+                  .map((element) => ({ element, sort: Math.random() }))
+                  .sort((a, b) => a.sort - b.sort)
+                  .map(({ element }) => element)
+                  .map(({ answer, testId }, index) => (
+                    <button data-testid={ testId } key={ index } type="button">
+                      {answer}
                     </button>
-                    <button type="button" data-testid="wrong-answer-0">
-                      { questions[indexQuest].incorrect_answers[0]}
-                    </button>
-                    <button type="button" data-testid="wrong-answer-1">
-                      { questions[indexQuest].incorrect_answers[1]}
-                    </button>
-                    <button type="button" data-testid="wrong-answer-2">
-                      { questions[indexQuest].incorrect_answers[2]}
-                    </button>
-                  </div>
-                )
-                : (
-                  <div data-testid="answer-options">
-                    <button type="button" data-testid="correct-answer">
-                      { questions[indexQuest].correct_answer}
-                    </button>
-                    <button type="button" data-testid="wrong-answer-0">
-                      { questions[indexQuest].incorrect_answers[0]}
-                    </button>
-                  </div>
-                )}
+                  ))}
+              </div>
             </div>
           )
           : <p> Loading ... </p>}
