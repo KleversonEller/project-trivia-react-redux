@@ -1,4 +1,4 @@
-import { EMAIL_NICK, GRAVATAR_HASH } from '../actions';
+import { EMAIL_NICK, GRAVATAR_HASH, SUM_SCORE } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -14,6 +14,8 @@ function player(state = INITIAL_STATE, action) {
     return { ...state, gravatarEmail: action.email, name: action.nick };
   case GRAVATAR_HASH:
     return { ...state, picture: action.payload };
+  case SUM_SCORE:
+    return { ...state, score: state.score + action.score };
   default:
     return state;
   }

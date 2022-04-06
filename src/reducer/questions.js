@@ -9,6 +9,7 @@ const questions = (state = INITIAL_STATE, action) => {
   case LOAD_QUESTIONS_SUCCESS:
     return action.questions.results
       .map((question) => ({
+        difficulty: question.difficulty,
         category: question.category,
         question: question.question,
         answers: question.incorrect_answers.length >= 2

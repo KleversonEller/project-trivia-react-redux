@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from './Header';
 import './Game.css';
+import { getScore } from '../actions';
 
 class Game extends React.Component {
   constructor() {
@@ -13,10 +14,27 @@ class Game extends React.Component {
     };
   }
 
-  changeClass = () => {
+  changeClass = (event) => {
+    const { scoreGet } = this.props;
     this.setState({
       classActive: true,
     });
+    const HARD_VALUE = 3;
+    const MEDIUM_VALUE = 2;
+    const EASY_VALUE = 1;
+    const DEFAULT_VALUE = 10;
+    const { name, value } = event.target;
+    const corretClick = name === 'correct';
+
+    let difficultyValue = 0;
+    if (value === 'hard') difficultyValue = HARD_VALUE;
+    if (value === 'medium') difficultyValue = MEDIUM_VALUE;
+    if (value === 'easy') difficultyValue = EASY_VALUE;
+
+    if (corretClick) {
+      const result = (DEFAULT_VALUE + (DEFAULT_VALUE * difficultyValue));
+      scoreGet(result);
+    }
   }
 
   render() {
@@ -46,6 +64,8 @@ class Game extends React.Component {
                       type="button"
                       className={ classActive && className }
                       onClick={ this.changeClass }
+                      name={ className }
+                      value={ questions[indexQuest].difficulty }
                     >
                       {answer}
                     </button>
@@ -63,8 +83,12 @@ const mapStateToProps = (state) => ({
   questions: state.questions,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  scoreGet: (score) => dispatch(getScore(score)),
+});
+
 Game.propTypes = {
   questions: PropTypes.object,
 }.isRequired;
 
-export default connect(mapStateToProps)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
