@@ -14,6 +14,7 @@ class Game extends React.Component {
       classActive: false,
       disabled: false,
       timer: 0,
+      next: false,
     };
   }
 
@@ -24,9 +25,12 @@ class Game extends React.Component {
   }
 
   timer = (timer) => {
-    this.setState({
-      timer,
-    });
+    const { next } = this.state;
+    if (next) {
+      this.setState({
+        timer,
+      });
+    }
   }
 
   changeClass = (event) => {
@@ -34,6 +38,7 @@ class Game extends React.Component {
     const { timer } = this.state;
     this.setState({
       classActive: true,
+      next: true,
     });
     const HARD_VALUE = 3;
     const MEDIUM_VALUE = 2;
@@ -53,9 +58,16 @@ class Game extends React.Component {
     }
   }
 
+  nextQuestion = () => {
+    this.setState((prevState) => ({
+      indexQuest: prevState.indexQuest + 1,
+      next: !prevState.next,
+    }));
+  }
+
   render() {
     const { questions } = this.props;
-    const { indexQuest, classActive, disabled } = this.state;
+    const { indexQuest, classActive, disabled, next } = this.state;
     return (
       <div>
         {questions.length > 0
@@ -88,6 +100,17 @@ class Game extends React.Component {
                     </button>
                   ))}
               </div>
+              { next
+              && (
+                <div>
+                  <button
+                    type="button"
+                    data-testid="btn-next"
+                    onClick={ this.nextQuestion }
+                  >
+                    Next
+                  </button>
+                </div>)}
               <div>
                 <Timer timeOut={ this.timeOut } timer={ this.timer } />
               </div>
