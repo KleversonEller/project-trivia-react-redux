@@ -13,6 +13,7 @@ class Game extends React.Component {
       indexQuest: 0,
       classActive: false,
       disabled: false,
+      timer: 0,
     };
   }
 
@@ -22,7 +23,15 @@ class Game extends React.Component {
     });
   }
 
-  changeClass = () => {
+  timer = (timer) => {
+    this.setState({
+      timer,
+    });
+  }
+
+  changeClass = (event) => {
+    const { scoreGet } = this.props;
+    const { timer } = this.state;
     this.setState({
       classActive: true,
     });
@@ -39,7 +48,7 @@ class Game extends React.Component {
     if (value === 'easy') difficultyValue = EASY_VALUE;
 
     if (corretClick) {
-      const result = (DEFAULT_VALUE + (DEFAULT_VALUE * difficultyValue));
+      const result = (DEFAULT_VALUE + (timer * difficultyValue));
       scoreGet(result);
     }
   }
@@ -80,7 +89,7 @@ class Game extends React.Component {
                   ))}
               </div>
               <div>
-                <Timer timeOut={ this.timeOut } />
+                <Timer timeOut={ this.timeOut } timer={ this.timer } />
               </div>
             </div>
           )
