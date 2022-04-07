@@ -5,6 +5,7 @@ import Header from './Header';
 import Timer from '../components/Timer';
 import './Game.css';
 import { getScore } from '../actions';
+// import { Redirect } from 'react-router-dom';
 
 class Game extends React.Component {
   constructor() {
@@ -59,18 +60,28 @@ class Game extends React.Component {
   }
 
   nextQuestion = () => {
+    const { indexQuest } = this.state;
+    const { history } = this.props;
+    const questionFive = 4;
     this.setState((prevState) => ({
       indexQuest: prevState.indexQuest + 1,
       next: !prevState.next,
-    }));
+      classActive: false,
+      disabled: false,
+    }), () => {
+      if (indexQuest === questionFive) {
+        history.push('/feedback');
+      }
+    });
   }
 
   render() {
     const { questions } = this.props;
-    const { indexQuest, classActive, disabled, next } = this.state;
+    const questionFive = 5;
+    const { indexQuest, classActive, disabled, next, timer } = this.state;
     return (
       <div>
-        {questions.length > 0
+        {questions.length > 0 && indexQuest < questionFive
           ? (
             <div>
               <Header />
@@ -112,7 +123,15 @@ class Game extends React.Component {
                   </button>
                 </div>)}
               <div>
-                <Timer timeOut={ this.timeOut } timer={ this.timer } />
+                { next ? <p>{ timer }</p>
+                  : (
+                    <Timer
+                      timeOut={ this.timeOut }
+                      timer={ this.timer }
+                      stop={ classActive }
+                      next={ next }
+                    />
+                  )}
               </div>
             </div>
           )

@@ -18,13 +18,13 @@ class Timer extends Component {
 
   componentWillUnmount() {
     const { timer } = this.state;
-    this.clearInterval(timer);
+    clearInterval(timer);
   }
 
   tick = () => {
     const { counter } = this.state;
-    const { timeOut, timer } = this.props;
-    if (counter > 0) {
+    const { timeOut, timer, stop, next } = this.props;
+    if (counter > 0 && !stop) {
       this.setState((prevState) => ({
         counter: prevState.counter - 1,
       }), () => {
@@ -32,6 +32,12 @@ class Timer extends Component {
       });
     } else {
       timeOut();
+    }
+
+    if (!next && stop) {
+      this.setState({
+        counter: 30,
+      });
     }
   }
 
